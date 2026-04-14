@@ -1,0 +1,187 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f5fbff;
+}
+
+/* APP LAYOUT */
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background: linear-gradient(180deg, #a8d8ff, #e6f4ff);
+  padding: 20px;
+  flex-shrink: 0;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  color: #1f3b57;
+}
+
+.sidebar p {
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: 0.2s;
+}
+
+.sidebar p:hover {
+  background: white;
+}
+
+.sidebar p.active {
+  background: white;
+  font-weight: bold;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 30px;
+  background: #f5fbff;
+}
+
+.main h1 {
+  margin-bottom: 15px;
+  color: #1f3b57;
+}
+
+/* CARDS */
+.card {
+  background: white;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border-left: 5px solid #7cc6fe;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card.importante {
+  border-left: 5px solid #ffb703;
+}
+
+.card.planes {
+  border-left: 5px solid #219ebc;
+}
+
+/* INPUT */
+.inputBox {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  background: #7cc6fe;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: #5bb3f5;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+  .app {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .sidebar p {
+    margin: 0;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .main {
+    padding: 15px;
+  }
+
+  .inputBox {
+    flex-direction: column;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+/* MODAL */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.modal h2 {
+  margin-bottom: 15px;
+}
+
+.modal input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
