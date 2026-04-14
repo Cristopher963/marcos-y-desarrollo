@@ -1,3 +1,4 @@
+import Registro from "./Componentes/Registro";
 import { useState } from "react";
 import Inicio from "./Paginas/Inicio";
 import Importante from "./Paginas/Importante";
@@ -12,6 +13,8 @@ function App() {
 
       <div className="sidebar">
         <h2> To Do</h2>
+
+        <Registro />
 
         <p onClick={() => setSection("Inicio")}>🏠 Inicio</p>
         <p onClick={() => setSection("Importante")}>⭐ Importante</p>
