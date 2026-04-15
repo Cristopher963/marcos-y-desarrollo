@@ -1,19 +1,81 @@
+TO DO APP
 
-# React + Vite
+Aplicación web desarrollada con React + Vite que permite a los usuarios registrarse, iniciar sesión y gestionar tareas.
+La aplicación permite organizar tareas, marcarlas como importantes y visualizarlas en diferentes secciones para una mejor gestión.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto fue desarrollado utilizando React en el frontend y control de versiones con GitHub.
 
-Currently, two official plugins are available:
+Tecnologías utilizadas:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+✔ React
+✔ Vite
+✔ JavaScript (ES6+)
+✔ CSS
+✔ Fetch API
+✔ Git & GitHub
 
-## React Compiler
+Estructura del proyecto (hasta ahora):
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+src
+ ┣ assets
+ ┣ Componentes
+ ┃ ┣ Registro.jsx
+ ┃ ┗ Registro.css
+ ┣ Paginas
+ ┃ ┣ Inicio.jsx
+ ┃ ┣ Importante.jsx
+ ┃ ┗ Planes.jsx
+ ┣ App.jsx
+ ┣ App.css
+ ┣ main.jsx
+ ┣ index.css
+ ┗ otros archivos de configuración
 
-## Expanding the ESLint configuration
+📄 Descripción de las páginas
+Inicio → Página principal de la aplicación.
+Importante → Muestra las tareas marcadas como importantes.
+Planes → Muestra todas las tareas creadas.
+Registro / Login → Permite a los usuarios registrarse e iniciar sesión.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
+Instalación y ejecución:
 
+Para ejecutar este proyecto en tu computadora:
+
+1️⃣ Clonar el repositorio
+git clone https://github.com/Cristopher963/marcos-y-desarrollo.git
+2️⃣ Entrar a la carpeta del proyecto
+cd marcos-y-desarrollo
+3️⃣ Instalar dependencias
+npm install
+4️⃣ Ejecutar el servidor de desarrollo
+npm run dev
+
+Luego abre tu navegador en:
+
+http://localhost:5173/
+
+Funcionalidades:
+
+✔ Registro de usuarios
+✔ Inicio de sesión
+✔ Creación de tareas
+✔ Visualización de tareas
+✔ Sección de tareas importantes
+✔ Organización de tareas por páginas
+
+Repositorio:
+
+Repositorio del proyecto:
+
+🔗 https://github.com/Cristopher963/marcos-y-desarrollo
+
+Integrantes:
+
+Cristopher Chauca
+Krhis Remigio
+Santiago Capcha
+
+Licencia:
+
+Proyecto desarrollado con fines educativos y académicos.
