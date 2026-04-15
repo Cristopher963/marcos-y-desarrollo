@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function Registro() {
 
   const [open, setOpen] = useState(false);
-  const [view, setView] = useState("login"); // login | register
+  const [view, setView] = useState("login"); 
 
   return (
     <>
