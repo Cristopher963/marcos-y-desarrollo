@@ -23,38 +23,57 @@ export default function Inicio() {
         setSelectedTask(null);
         setShowModal(true);
       }}>
-        ➕ Nueva tarea
+        + Nueva tarea
       </button>
 
       {tareas.map((tarea) => (
-        <div 
-          key={tarea.id} 
+        <div
+          key={tarea.id}
           className="card"
           onClick={() => abrirModal(tarea)}
           style={{ cursor: "pointer" }}
         >
-          {tarea.titulo}
+
+          <div>
+            <h3>{tarea.titulo}</h3>
+
+            <p
+              style={{
+                marginTop: "6px",
+                color: "#6b7280",
+              }}
+            >
+              {tarea.descripcion}
+            </p>
+          </div>
+
         </div>
       ))}
 
       {/* MODAL */}
       {showModal && (
-        <div className="modalOverlay">
-          <div className="modal">
+        <div
+          className="modalOverlay"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="modal"
+            onClick={(e) => e.stopPropagation()}
+          >
 
             <h2>
               {selectedTask ? "Editar tarea" : "Crear tarea"}
             </h2>
 
             <form>
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Título"
                 defaultValue={selectedTask?.titulo || ""}
               />
 
-              <input 
-                type="text" 
+              <input
+                type="text"
                 placeholder="Descripción"
                 defaultValue={selectedTask?.descripcion || ""}
               />
@@ -66,9 +85,11 @@ export default function Inicio() {
                 <option value="urgente">Urgente</option>
               </select>
 
+              <textarea placeholder="Notas"></textarea>
+
               <div className="modalButtons">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   onClick={() => setShowModal(false)}
                 >
                   Cancelar
