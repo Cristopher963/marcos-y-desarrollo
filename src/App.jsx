@@ -10,6 +10,12 @@ import "./App.css";
 function App() {
   const [section, setSection] = useState("Inicio");
 
+  //Arreglo para guardar tareas
+  const [tareas, setTareas] = useState([
+    { id: 1, titulo: "Tarea 1", descripcion: "Descripción 1", tipo: "normal" },
+    { id: 2, titulo: "Tarea 2", descripcion: "Descripción 2", tipo: "importante" }
+  ]);
+
   return (
     <div className="app">
 
@@ -46,10 +52,10 @@ function App() {
 
       <div className="main">
 
-        {section === "Inicio" && <Inicio />}
-        {section === "Importante" && <Importante />}
-        {section === "Planes" && <Planes />}
-        {section === "Calendario" && <Calendario />}
+        {section === "Inicio" && <Inicio tareas={tareas} setTareas={setTareas}/>}
+        {section === "Importante" && <Importante tareas={tareas}/>}
+        {section === "Planes" && <Planes tareas={tareas}/>}
+        {section === "Calendario" && <Calendario tareas={tareas}/>}
 
       </div>
       <Footer />

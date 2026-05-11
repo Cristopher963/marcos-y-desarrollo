@@ -1,8 +1,20 @@
-export default function Importante() {
+export default function Importante({ tareas = [] }) {
+  const importantes = tareas.filter((tarea) => tarea.tipo === "importante");
+  
+  //condicional que evalua si hay o no tareas importantes
   return (
     <div>
       <h1>⭐ Importante</h1>
-      <div className="card importante">Trabajo 1</div>
+      {importantes.length === 0 ? (
+        <p>No hay tareas importantes.</p>
+      ) : (
+        importantes.map((tarea) => (
+          <div key={tarea.id} className="card importante">
+            <h3>{tarea.titulo}</h3>
+            <p>{tarea.descripcion}</p>
+          </div>
+        ))
+      )}
     </div>
   );
 }
