@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Registro from "./Componentes/Registro";
 import Footer from "./Componentes/Footer";
 import Inicio from "./Paginas/Inicio";
@@ -11,10 +11,14 @@ function App() {
   const [section, setSection] = useState("Inicio");
 
   //Arreglo para guardar tareas
-  const [tareas, setTareas] = useState([
-    { id: 1, titulo: "Tarea 1", descripcion: "Descripción 1", tipo: "normal" },
-    { id: 2, titulo: "Tarea 2", descripcion: "Descripción 2", tipo: "importante" }
-  ]);
+  const [tareas, setTareas] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/tareas")
+      .then((res) => res.json())
+      .then((data) => setTareas(data))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="app">
@@ -52,10 +56,10 @@ function App() {
 
       <div className="main">
 
-        {section === "Inicio" && <Inicio tareas={tareas} setTareas={setTareas}/>}
-        {section === "Importante" && <Importante tareas={tareas}/>}
-        {section === "Planes" && <Planes tareas={tareas}/>}
-        {section === "Calendario" && <Calendario tareas={tareas}/>}
+        {section === "Inicio" && <Inicio tareas={tareas} setTareas={setTareas} />}
+        {section === "Importante" && <Importante tareas={tareas} />}
+        {section === "Planes" && <Planes tareas={tareas} />}
+        {section === "Calendario" && <Calendario tareas={tareas} />}
 
       </div>
       <Footer />
