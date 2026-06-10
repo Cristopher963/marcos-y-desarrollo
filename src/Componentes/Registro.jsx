@@ -18,18 +18,24 @@ export default function Registro() {
   const [passwordRegistro, setPasswordRegistro] = useState("");
   const [confirmarPassword, setConfirmarPassword] = useState("");
   const [error, setError] = useState("");
+  const [usuarioActual, setUsuarioActual] = useState(() => {
+    const guardado = localStorage.getItem("usuario");
+    return guardado ? JSON.parse(guardado) : null;
+  });
 
   const handleLogin = (e) => {
     e.preventDefault();
     setError("");
 
     fetch("http://localhost:8080/usuarios")
-    .then((res) => res.json())
-    .then((usuarios) => {
+      .then((res) => res.json())
+      .then((usuarios) => {
         const usuario = usuarios.find(
           (u) => u.email === emailLogin && u.password === passwordLogin
         );
         if (usuario) {
+          setUsuarioActual(usuario);
+          localStorage.setItem("usuario", JSON.stringify(usuario));
           setOpen(false);
           setLoginSuccess(true);
           setTimeout(() => setLoginSuccess(false), 2000);
@@ -37,7 +43,7 @@ export default function Registro() {
           setError("Correo o contraseña incorrectos.");
         }
       })
-    .catch((err) => console.error(err));
+      .catch((err) => console.error(err));
   };
 
   const handleRegistro = (e) => {
@@ -67,9 +73,23 @@ export default function Registro() {
 
   return (
     <>
-      <button className="btn-registro" onClick={() => setOpen(true)}>
-        Iniciar sesión
+      <button
+        className="btn-registro"
+        onClick={() => !usuarioActual && setOpen(true)}
+      >
+        {usuarioActual ? usuarioActual.nombre : "Iniciar sesión"}
       </button>
+
+      {usuarioActual && (
+        <button
+          onClick={() => {
+            localStorage.removeItem("usuario");
+            setUsuarioActual(null);
+          }}
+        >
+          Cerrar sesión
+        </button>
+      )}
 
       {open &&
         createPortal(
