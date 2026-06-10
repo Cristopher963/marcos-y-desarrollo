@@ -28,37 +28,50 @@ export default function Inicio({ tareas = [], setTareas }) {
     setTipo("normal");
   };
 
+  // Eliminar tarea
+  const eliminarTarea = (id) => {
+    fetch(`http://localhost:8080/tareas/${id}`, {
+      method: "DELETE"
+    })
+    .then(() => {
+      setTareas((prev) => prev.filter((t) => t.idTarea !== id));
+    })
+    .catch((err) => console.error(err));
+  };
+
   // Guardar tarea (crear o editar)
   const guardarTarea = (e) => {
     e.preventDefault();
 
     if (selectedTask) {
       // Editar tarea
-      const nuevasTareas = tareas.map((tarea) =>
-        tarea.id === selectedTask.id
-          ? {
-              ...tarea,
-              titulo,
-              descripcion,
-              tipo
-            }
-          : tarea
-      );
-
-      setTareas(nuevasTareas);
+      fetch(`http://localhost:8080/tareas/${selectedTask.idTarea}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ titulo, descripcion, prioridad: tipo })
+      })
+      .then((res) => res.json())
+      .then((tareaActualizada) => {
+        setTareas((prev) =>
+          prev.map((t) =>
+            t.idTarea === tareaActualizada.idTarea ? tareaActualizada : t));
+        cerrarModal();
+      })
+      .catch((err) => console.error(err));
     } else {
       // Crear tarea
-      const nuevaTarea = {
-        id: Date.now(),
-        titulo,
-        descripcion,
-        tipo
-      };
-
-      setTareas((prev) => [...prev, nuevaTarea]);
+      fetch("http://localhost:8080/tareas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ titulo, descripcion, prioridad: tipo })
+      })
+      .then((res) => res.json())
+      .then((tareaNueva) => {
+        setTareas((prev) => [...prev, tareaNueva]);
+        cerrarModal();
+      })
+      .catch((err) => console.error(err));
     }
-
-    cerrarModal();
   };
 
   return (
@@ -76,24 +89,16 @@ export default function Inicio({ tareas = [], setTareas }) {
       </button>
 
       {tareas.map((tarea) => (
-        <div
-          key={tarea.id}
-          className="card"
-          onClick={() => abrirModal(tarea)}
-          style={{ cursor: "pointer" }}
-        >
-          <div>
+        <div key={tarea.idTarea} className="card" style={{ cursor: "pointer" }}>
+          <div onClick={() => abrirModal(tarea)}>
             <h3>{tarea.titulo}</h3>
-
-            <p
-              style={{
-                marginTop: "6px",
-                color: "#6b7280",
-              }}
-            >
+            <p style={{ marginTop: "6px", color: "#6b7280" }}>
               {tarea.descripcion}
             </p>
           </div>
+          <button onClick={() => eliminarTarea(tarea.idTarea)} style={{ marginTop: "8px" }}>
+            Eliminar
+          </button>
         </div>
       ))}
 
@@ -129,9 +134,9 @@ export default function Inicio({ tareas = [], setTareas }) {
 
               {/* Tipo de tarea */}
               <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-                <option value="normal">Normal</option>
-                <option value="importante">Importante</option>
-                <option value="urgente">Urgente</option>
+                <option value="MEDIA">Normal</option>
+                <option value="ALTA">Importante</option>
+                <option value="BAJA">Baja</option>
               </select>
 
               <textarea placeholder="Notas"></textarea>

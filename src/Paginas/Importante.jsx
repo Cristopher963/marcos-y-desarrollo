@@ -1,5 +1,5 @@
 export default function Importante({ tareas = [] }) {
-  const importantes = tareas.filter((tarea) => tarea.tipo === "importante");
+  const importantes = tareas.filter((tarea) => tarea.prioridad === "ALTA");
   
   //condicional que evalua si hay o no tareas importantes
   return (
@@ -9,7 +9,7 @@ export default function Importante({ tareas = [] }) {
         <p>No hay tareas importantes.</p>
       ) : (
         importantes.map((tarea) => (
-          <div key={tarea.id} className="card importante">
+          <div key={tarea.idTarea} className="card importante">
             <h3>{tarea.titulo}</h3>
             <p>{tarea.descripcion}</p>
           </div>
