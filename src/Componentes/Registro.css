@@ -120,6 +120,7 @@
   align-items: center;
   background: rgba(0,0,0,0.2);
   z-index: 9999;
+  backdrop-filter: blur(4px);
 }
 
 .welcomeModal {

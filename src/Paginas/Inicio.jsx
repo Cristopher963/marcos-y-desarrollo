@@ -1,21 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export default function Inicio({ tareas = [], setTareas }) {
+export default function Inicio({ tareas = [], setTareas, usuarioActual }) {
 
   const [showModal, setShowModal] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
-
+  const [categorias, setCategorias] = useState([]);
+  const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState([]);
   //Funciones para guardar tareas
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
-  const [tipo, setTipo] = useState("normal");
+  const [tipo, setTipo] = useState("MEDIA");
+  const [fechaLimite, setFechaLimite] = useState("");
 
   //Abrir tarea
   const abrirModal = (tarea) => {
     setSelectedTask(tarea);
     setTitulo(tarea?.titulo || "");
     setDescripcion(tarea?.descripcion || "");
-    setTipo(tarea?.tipo || "normal");
+    setTipo(tarea?.prioridad || "MEDIA");
+    setFechaLimite(tarea?.fechaLimite || "");
+    setCategoriasSeleccionadas(tarea?.categorias?.map((c) => c.idCategoria) || []);
     setShowModal(true);
   };
 
@@ -25,7 +29,9 @@ export default function Inicio({ tareas = [], setTareas }) {
     setSelectedTask(null);
     setTitulo("");
     setDescripcion("");
-    setTipo("normal");
+    setTipo("MEDIA");
+    setFechaLimite("");
+    setCategoriasSeleccionadas([]);
   };
 
   // Eliminar tarea
@@ -48,7 +54,14 @@ export default function Inicio({ tareas = [], setTareas }) {
       fetch(`http://localhost:8080/tareas/${selectedTask.idTarea}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titulo, descripcion, prioridad: tipo })
+        body: JSON.stringify({
+          titulo,
+          descripcion,
+          prioridad: tipo,
+          fechaLimite,
+          usuario: usuarioActual ? { idUsuario: usuarioActual.idUsuario } : null,
+          categorias: categoriasSeleccionadas.map((id) => ({ idCategoria: id }))
+        })
       })
       .then((res) => res.json())
       .then((tareaActualizada) => {
@@ -63,16 +76,42 @@ export default function Inicio({ tareas = [], setTareas }) {
       fetch("http://localhost:8080/tareas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titulo, descripcion, prioridad: tipo })
+        body: JSON.stringify({
+          titulo,
+          descripcion,
+          prioridad: tipo,
+          fechaLimite,
+          usuario: usuarioActual ? { idUsuario: usuarioActual.idUsuario } : null,
+          categorias: categoriasSeleccionadas.map((id) => ({ idCategoria: id }))
+        })
       })
       .then((res) => res.json())
       .then((tareaNueva) => {
         setTareas((prev) => [...prev, tareaNueva]);
         cerrarModal();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        cerrarModal();
+      });
     }
   };
+
+  const tareasFiltradas = usuarioActual ? tareas.filter((tarea) => tarea.usuario?.idUsuario === usuarioActual.idUsuario):[];
+
+  const toggleCategoria = (id) => {
+    setCategoriasSeleccionadas((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
+    );
+  };
+
+  useEffect(() => {
+    if (!usuarioActual) return;
+    fetch(`http://localhost:8080/categorias/usuario/${usuarioActual.idUsuario}`)
+      .then((res) => res.json())
+      .then((data) => setCategorias(data))
+      .catch((err) => console.error(err));
+  }, [usuarioActual]);
 
   return (
     <div>
@@ -82,19 +121,22 @@ export default function Inicio({ tareas = [], setTareas }) {
         setSelectedTask(null);
         setTitulo("");
         setDescripcion("");
-        setTipo("normal");
+        setTipo("MEDIA");
         setShowModal(true);
       }}>
         + Nueva tarea
       </button>
 
-      {tareas.map((tarea) => (
+      {tareasFiltradas.map((tarea) => (
         <div key={tarea.idTarea} className="card" style={{ cursor: "pointer" }}>
           <div onClick={() => abrirModal(tarea)}>
-            <h3>{tarea.titulo}</h3>
+            <h3 style={{color: "black"}}>
+              {tarea.titulo}
+            </h3>
             <p style={{ marginTop: "6px", color: "#6b7280" }}>
               {tarea.descripcion}
             </p>
+            <h3 style={{ marginTop: "6px"}}>{tarea.fechaLimite}</h3>
           </div>
           <button onClick={() => eliminarTarea(tarea.idTarea)} style={{ marginTop: "8px" }}>
             Eliminar
@@ -126,10 +168,10 @@ export default function Inicio({ tareas = [], setTareas }) {
               />
 
               <input
-                type="text"
-                placeholder="Descripción"
-                value={descripcion}
-                onChange={(e) => setDescripcion(e.target.value)}
+                type="date"
+                placeholder="Fecha Limite"
+                value={fechaLimite}
+                onChange={(e) => setFechaLimite(e.target.value)}
               />
 
               {/* Tipo de tarea */}
@@ -139,7 +181,34 @@ export default function Inicio({ tareas = [], setTareas }) {
                 <option value="BAJA">Baja</option>
               </select>
 
-              <textarea placeholder="Notas"></textarea>
+              {categorias.length > 0 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                  <label style={{ fontWeight: "500" }}>Categorías:</label>
+                  {categorias.map((cat) => (
+                    <label key={cat.idCategoria} style={{ display: "flex", alignItems: "center", gap: "8px", cursor: "pointer" }}>
+                      <input type="checkbox"
+                        checked={categoriasSeleccionadas.includes(cat.idCategoria)}
+                        onChange={() => toggleCategoria(cat.idCategoria)}
+                        style={{ width: "16px", height: "16px", cursor: "pointer" }}
+                      />
+                      <span style={{
+                        width: "12px",
+                        height: "12px",
+                        borderRadius: "50%",
+                        background: cat.color,
+                        display: "inline-block"
+                      }}/>
+                      {cat.nombre}
+                    </label>
+                  ))}
+                </div>
+              )}
+
+              <textarea
+                placeholder="Descripción"
+                value={descripcion}
+                onChange={(e) => setDescripcion(e.target.value)}
+              />
 
               <div className="modalButtons">
                 <button

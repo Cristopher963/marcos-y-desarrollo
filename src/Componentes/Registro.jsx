@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import "./Registro.css";
 import { useState } from "react";
 
-export default function Registro() {
+export default function Registro({ usuarioActual, setUsuarioActual }) {
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [open, setOpen] = useState(false);
@@ -18,10 +18,6 @@ export default function Registro() {
   const [passwordRegistro, setPasswordRegistro] = useState("");
   const [confirmarPassword, setConfirmarPassword] = useState("");
   const [error, setError] = useState("");
-  const [usuarioActual, setUsuarioActual] = useState(() => {
-    const guardado = localStorage.getItem("usuario");
-    return guardado ? JSON.parse(guardado) : null;
-  });
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -189,10 +185,11 @@ export default function Registro() {
           document.body
         )}
 
-      {loginSuccess && (
+      {loginSuccess && createPortal(
         <div className="welcomeOverlay">
           <div className="welcomeModal">Bienvenido</div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

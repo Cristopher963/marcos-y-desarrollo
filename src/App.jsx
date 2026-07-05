@@ -3,15 +3,18 @@ import Registro from "./Componentes/Registro";
 import Footer from "./Componentes/Footer";
 import Inicio from "./Paginas/Inicio";
 import Importante from "./Paginas/Importante";
-import Planes from "./Paginas/Planes";
+import Categorias from "./Paginas/Categorias";
 import Calendario from "./Paginas/Calendario";
 import "./App.css";
 
 function App() {
   const [section, setSection] = useState("Inicio");
-
-  //Arreglo para guardar tareas
   const [tareas, setTareas] = useState([]);
+
+  const [usuarioActual, setUsuarioActual] = useState(() => {
+    const guardado = localStorage.getItem("usuario");
+    return guardado ? JSON.parse(guardado) : null;
+  });
 
   useEffect(() => {
     fetch("http://localhost:8080/tareas")
@@ -26,7 +29,7 @@ function App() {
       <div className="sidebar">
         <h2> To Do</h2>
 
-        <Registro />
+        <Registro usuarioActual={usuarioActual} setUsuarioActual={setUsuarioActual} />
 
         <p
           className={section === "Inicio" ? "active" : ""}
@@ -41,10 +44,10 @@ function App() {
           ⭐ Importante
         </p>
         <p
-          className={section === "Planes" ? "active" : ""}
-          onClick={() => setSection("Planes")}
+          className={section === "Categorias" ? "active" : ""}
+          onClick={() => setSection("Categorias")}
         >
-          📫 Planes
+          🗂️ Categorías
         </p>
         <p
           className={section === "Calendario" ? "active" : ""}
@@ -56,10 +59,18 @@ function App() {
 
       <div className="main">
 
-        {section === "Inicio" && <Inicio tareas={tareas} setTareas={setTareas} />}
-        {section === "Importante" && <Importante tareas={tareas} />}
-        {section === "Planes" && <Planes tareas={tareas} />}
-        {section === "Calendario" && <Calendario tareas={tareas} />}
+        {section === "Inicio" && (
+          <Inicio tareas={tareas} setTareas={setTareas} usuarioActual={usuarioActual} />
+        )}
+        {section === "Importante" &&
+          <Importante tareas={tareas} usuarioActual={usuarioActual} />
+        }
+        {section === "Categorias" && (
+          <Categorias tareas={tareas} usuarioActual={usuarioActual} />
+        )}
+        {section === "Calendario" &&
+          <Calendario tareas={tareas} usuarioActual={usuarioActual} />
+        }
 
       </div>
       <Footer />
