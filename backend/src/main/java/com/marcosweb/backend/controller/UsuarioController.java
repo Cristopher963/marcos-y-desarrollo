@@ -2,6 +2,9 @@ package com.marcosweb.backend.controller;
 
 import com.marcosweb.backend.entity.Usuario;
 import com.marcosweb.backend.service.UsuarioService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -28,7 +31,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario guardar(@RequestBody Usuario usuario) {
+    public Usuario guardar(@Valid @RequestBody Usuario usuario) {
         return usuarioService.guardar(usuario);
     }
 

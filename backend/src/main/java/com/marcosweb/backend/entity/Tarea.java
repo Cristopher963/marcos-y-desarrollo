@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tareas")
@@ -13,9 +15,11 @@ public class Tarea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTarea;
 
+    @NotBlank(message = "El título no puede estar vacío")
     @Column(nullable = false)
     private String titulo;
 
+    @Size(max = 500, message = "La descripción no puede superar los 500 caracteres")
     private String descripcion;
 
     @Enumerated(EnumType.STRING)
@@ -110,5 +114,13 @@ public class Tarea {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
     }
 }
