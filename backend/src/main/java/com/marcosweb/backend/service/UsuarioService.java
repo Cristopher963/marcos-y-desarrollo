@@ -3,16 +3,20 @@ package com.marcosweb.backend.service;
 import com.marcosweb.backend.entity.Usuario;
 import com.marcosweb.backend.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.List;
-
 
 @Service
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository,
+            PasswordEncoder passwordEncoder) {
+
         this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<Usuario> listar() {
@@ -23,7 +27,15 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
+    public Usuario buscarPorEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
     public Usuario guardar(Usuario usuario) {
+
+        usuario.setPassword(
+                passwordEncoder.encode(usuario.getPassword()));
+
         return usuarioRepository.save(usuario);
     }
 

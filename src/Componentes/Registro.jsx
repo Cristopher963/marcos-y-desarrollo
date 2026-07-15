@@ -23,23 +23,32 @@ export default function Registro({ usuarioActual, setUsuarioActual }) {
     e.preventDefault();
     setError("");
 
-    fetch("http://localhost:8080/usuarios")
-      .then((res) => res.json())
-      .then((usuarios) => {
-        const usuario = usuarios.find(
-          (u) => u.email === emailLogin && u.password === passwordLogin
-        );
-        if (usuario) {
-          setUsuarioActual(usuario);
-          localStorage.setItem("usuario", JSON.stringify(usuario));
-          setOpen(false);
-          setLoginSuccess(true);
-          setTimeout(() => setLoginSuccess(false), 2000);
-        } else {
-          setError("Correo o contraseña incorrectos.");
+    fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailLogin,
+        password: passwordLogin,
+      }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Correo o contraseña incorrectos.");
         }
+        return res.json();
       })
-      .catch((err) => console.error(err));
+      .then((usuario) => {
+        setUsuarioActual(usuario);
+        localStorage.setItem("usuario", JSON.stringify(usuario));
+        setOpen(false);
+        setLoginSuccess(true);
+        setTimeout(() => setLoginSuccess(false), 2000);
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   const handleRegistro = (e) => {

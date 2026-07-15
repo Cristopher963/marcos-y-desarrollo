@@ -25,7 +25,7 @@ public class Usuario {
     private String email;
 
     @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
+    @Size(min = 1, message = "La contraseña debe tener al menos 3 caracteres")
     private String password;
 
     private LocalDateTime fechaCreacion = LocalDateTime.now();
