@@ -1,150 +1,241 @@
-TO DO APP FULLSTACK
+# TO DO APP FULLSTACK
 
-Aplicación web fullstack desarrollada con React + Vite en el frontend y Spring Boot + MySQL en el backend.
-La aplicación permite a los usuarios registrarse, iniciar sesión y gestionar tareas de manera dinámica utilizando una API REST conectada a base de datos.
+Aplicación web Full Stack desarrollada con **React + Vite** en el frontend y **Spring Boot + MySQL** en el backend.
 
-El sistema permite organizar tareas, editarlas, clasificarlas por prioridad y visualizarlas en diferentes secciones para una mejor gestión.
+La aplicación permite a los usuarios registrarse, iniciar sesión y gestionar tareas de forma dinámica mediante una API REST conectada a una base de datos MySQL.
 
-Este proyecto fue desarrollado utilizando React para el frontend, Spring Boot para el backend y GitHub para el control de versiones.
+El sistema facilita la organización de tareas mediante operaciones CRUD, clasificación por prioridad y visualización en diferentes secciones para mejorar la productividad.
 
-Tecnologías utilizadas:
+---
 
-✔ React
-✔ Vite
-✔ JavaScript (ES6+)
-✔ CSS3
-✔ Fetch API
-✔ Spring Boot
-✔ Spring Web
-✔ Spring Data JPA
-✔ Hibernate
-✔ MySQL
-✔ Maven
-✔ Git & GitHub
+# Características
 
-Estructura del proyecto:
+- Registro de usuarios.
+- Inicio de sesión.
+- Gestión completa de tareas (CRUD).
+- Organización de tareas por prioridad.
+- Calendario interactivo.
+- Comunicación entre frontend y backend mediante API REST.
+- Persistencia de datos en MySQL.
+- Arquitectura organizada por capas.
 
-frontend
- ┣ src
- ┃ ┣ assets
- ┃ ┣ Componentes
- ┃ ┃ ┣ Footer.jsx
- ┃ ┃ ┣ Footer.css
- ┃ ┃ ┣ Registro.jsx
- ┃ ┃ ┗ Registro.css
- ┃ ┣ Paginas
- ┃ ┃ ┣ Inicio.jsx
- ┃ ┃ ┣ Importante.jsx
- ┃ ┃ ┣ Planes.jsx
- ┃ ┃ ┗ Calendario.jsx
- ┃ ┣ api.js
- ┃ ┣ App.jsx
- ┃ ┣ App.css
- ┃ ┣ main.jsx
- ┃ ┗ index.css
- ┗ otros archivos de configuración
+---
 
-backend
- ┣ src/main/java/com/marcosweb/backend
- ┃ ┣ controller
- ┃ ┃ ┣ UsuarioController.java
- ┃ ┃ ┣ TareaController.java
- ┃ ┃ ┣ CategoriaController.java
- ┃ ┃ ┣ RecordatorioController.java
- ┃ ┃ ┗ SubtareaController.java
- ┃ ┣ entity
- ┃ ┃ ┣ Usuario.java
- ┃ ┃ ┣ Tarea.java
- ┃ ┃ ┣ Categoria.java
- ┃ ┃ ┣ Recordatorio.java
- ┃ ┃ ┗ Subtarea.java
- ┃ ┣ service
- ┃ ┗ repository
+# Tecnologías Utilizadas
 
-📄 Descripción de las páginas
+## Frontend
 
-Inicio → Página principal donde se muestran y gestionan las tareas.
-Importante → Muestra las tareas clasificadas como prioritarias.
-Planes → Sección destinada a planes y organización adicional.
-Calendario → Calendario interactivo para visualización de fechas.
-Registro / Login → Permite registrar usuarios e iniciar sesión.
+- React
+- Vite
+- JavaScript (ES6+)
+- HTML5
+- CSS3
+- Fetch API
 
-Instalación y ejecución:
+## Backend
 
-1️⃣ Clonar el repositorio
+- Java
+- Spring Boot
+- Spring Web
+- Spring Data JPA
+- Hibernate
+- Maven
 
+## Base de Datos
+
+- MySQL
+
+## Herramientas
+
+- Git
+- GitHub
+
+---
+
+# Estructura del Proyecto
+
+```text
+marcos-y-desarrollo/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── Componentes/
+│   │   ├── Paginas/
+│   │   ├── api.js
+│   │   ├── App.jsx
+│   │   ├── App.css
+│   │   ├── main.jsx
+│   │   └── index.css
+│   └── ...
+│
+├── backend/
+│   ├── src/main/java/com/marcosweb/backend/
+│   │   ├── controller/
+│   │   ├── entity/
+│   │   ├── repository/
+│   │   ├── service/
+│   │   └── ...
+│   └── pom.xml
+│
+└── README.md
+```
+
+---
+
+#  Descripción de las Páginas
+
+### 🏠 Inicio
+Página principal donde el usuario puede visualizar y gestionar todas sus tareas.
+
+### ⭐ Importante
+Muestra únicamente las tareas marcadas como prioritarias.
+
+### 📝 Planes
+Sección destinada a la organización de planes y actividades.
+
+### 📅 Calendario
+Calendario interactivo para visualizar las tareas según su fecha.
+
+### 👤 Registro / Inicio de Sesión
+Permite registrar nuevos usuarios e iniciar sesión para acceder a todas las funcionalidades del sistema.
+
+---
+
+#  Instalación
+
+## 1. Clonar el repositorio
+
+```bash
 git clone https://github.com/Cristopher963/marcos-y-desarrollo.git
+```
 
-2️⃣ Entrar a la carpeta del frontend
+---
 
+## 2. Ejecutar el Frontend
+
+Entrar a la carpeta del frontend:
+
+```bash
 cd frontend
+```
 
-3️⃣ Instalar dependencias
+Instalar dependencias:
 
+```bash
 npm install
+```
 
-4️⃣ Ejecutar React
+Ejecutar la aplicación:
 
+```bash
 npm run dev
+```
 
-El frontend se ejecutará en:
+El frontend estará disponible en:
 
+```
 http://localhost:5173/
+```
 
-Configuración del backend:
+---
 
-1️⃣ Entrar a la carpeta backend
+## 3. Ejecutar el Backend
 
+Entrar a la carpeta del backend:
+
+```bash
 cd backend
+```
 
-2️⃣ Ejecutar Spring Boot
+Ejecutar Spring Boot:
 
-Windows:
+### Windows
 
-./mvnw spring-boot:run
+```bash
+mvnw spring-boot:run
+```
 
-Linux/Mac:
+### Linux / macOS
 
+```bash
 mvn spring-boot:run
+```
 
-El backend se ejecutará en:
+El backend estará disponible en:
 
+```
 http://localhost:8080/
+```
 
-Funcionalidades:
+---
 
-✔ Registro de usuarios
-✔ Inicio de sesión
-✔ CRUD de tareas
-✔ Creación de tareas
-✔ Edición de tareas
-✔ Visualización dinámica de tareas
-✔ Organización por prioridad
-✔ Consumo de API REST
-✔ Persistencia en MySQL
-✔ Interfaz responsive
-✔ Calendario interactivo
+# 🗄 Configuración de la Base de Datos
 
-Integración Frontend y Backend:
+Antes de ejecutar el backend, configure la conexión a MySQL en el archivo:
 
-La comunicación entre React y Spring Boot se realiza mediante Fetch API y endpoints REST.
+```
+backend/src/main/resources/application.properties
+```
+
+Asegúrese de crear previamente la base de datos correspondiente.
+
+---
+
+# ✅ Funcionalidades
+
+- Registro de usuarios.
+- Inicio de sesión.
+- Crear tareas.
+- Editar tareas.
+- Eliminar tareas.
+- Visualizar tareas.
+- Organización por prioridad.
+- Calendario interactivo.
+- Consumo de API REST.
+- Persistencia de datos en MySQL.
+- Interfaz responsive.
+
+---
+
+# 🔗 Integración Frontend - Backend
+
+La comunicación entre React y Spring Boot se realiza mediante peticiones HTTP utilizando **Fetch API** y una **API REST**.
 
 Ejemplo:
 
+```javascript
 fetch("http://localhost:8080/tareas")
+```
 
-Repositorio:
+---
 
-Repositorio del proyecto:
+# 🏗 Arquitectura
 
-GitHub - marcos-y-desarrollo
+El backend sigue una arquitectura por capas:
 
-Integrantes:
+```text
+Controller
+     │
+Service
+     │
+Repository
+     │
+MySQL
+```
 
-Cristopher Chauca
-Krhis Remigio
-Santiago Capcha
+Esta estructura facilita el mantenimiento, la escalabilidad y la organización del código.
 
-Licencia:
+---
 
-Proyecto desarrollado con fines educativos y académicos.
+# 👥 Integrantes
+
+- Cristopher Chauca
+- Krhis Remigio
+- Santiago Capcha
+
+---
+
+# 📄 Licencia
+
+Proyecto desarrollado con fines académicos y educativos.

@@ -15,7 +15,7 @@ export default function Footer() {
       <div className="footerRight">
         <span>Soporte</span>
 
-        <span>Version 2.0</span>
+        <span>Version 4.0</span>
       </div>
 
     </footer>
